@@ -11,15 +11,24 @@ namespace Xadrez_Console
             Console.ForegroundColor = ConsoleColor.Yellow;
             try
             {
-                Tabuleiro tab = new Tabuleiro(8, 8);
+                PartidaDeXadrez partida = new PartidaDeXadrez();
+ 
+                while(!partida.terminada)
+                {
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.tab);
 
-                tab.ColocarPeca(new Torre(tab, Cor.Preta), new Posicao(1, 3));
-                tab.ColocarPeca(new Rei(tab, Cor.Branca), new Posicao(1, 7));
-                tab.ColocarPeca(new Rei(tab, Cor.Branca), new Posicao(1, 4));
-                tab.ColocarPeca(new Rei(tab, Cor.Preta), new Posicao(2, 5));
+                    Console.WriteLine();
+                    Console.Write("Digite as coordenadas da peça que deseja mover: ");
+                    Posicao origem = Tela.LerPosicaoXadrez().toPosition();
+                    Console.Write("Digite as coordenadas de destino da peça:");
+                    Posicao destino = Tela.LerPosicaoXadrez().toPosition();
 
-                Tela.ImprimirTabuleiro(tab);
-                Console.ReadLine();
+                    partida.ExecutaMovimento(origem, destino);
+                    Console.ReadLine();
+                }
+
+               
             }
             catch(TabuleiroException e)
             {
