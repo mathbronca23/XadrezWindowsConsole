@@ -21,11 +21,16 @@ namespace Xadrez_Console
                     Console.WriteLine();
                     Console.Write("Digite as coordenadas da peça que deseja mover: ");
                     Posicao origem = Tela.LerPosicaoXadrez().toPosition();
+
+                    bool[,] PosicoesPossiveis = partida.tab.RetornaMatrizPeca(origem).MovimentosPossiveis();
+
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.tab,PosicoesPossiveis);
+
+                    Console.WriteLine();
                     Console.Write("Digite as coordenadas de destino da peça:");
                     Posicao destino = Tela.LerPosicaoXadrez().toPosition();
-
                     partida.ExecutaMovimento(origem, destino);
-                    Console.ReadLine();
                 }
 
                
