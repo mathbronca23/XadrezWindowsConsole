@@ -6,8 +6,8 @@ namespace xadrez
     class PartidaDeXadrez
     {
         public Tabuleiro tab { get; private set; }
-        private int turno;
-        private Cor jogadorAtual;
+        public int turno { get; private set; }
+        public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
 
         public PartidaDeXadrez()
@@ -17,6 +17,49 @@ namespace xadrez
             jogadorAtual = Cor.Branca;
             ColocarPecas();
             terminada = false;
+        }
+
+        public void RealizaJogada(Posicao origem, Posicao destino)
+        {
+            ExecutaMovimento(origem, destino);
+            turno++;
+            MudaJogador();
+        }
+
+        private void MudaJogador()
+        {
+            if (jogadorAtual == Cor.Branca)
+            {
+                jogadorAtual = Cor.Preta;
+            }
+            else
+            {
+                jogadorAtual = Cor.Branca;
+            }      
+        }
+
+        public void ValidaPosicaoDeOrigem(Posicao pos)
+        {
+            if(tab.RetornaMatrizPeca(pos) == null)
+            {
+                throw new TabuleiroException("Não existe peça válida na posição de origem escolhida.");
+            }
+            if(tab.RetornaMatrizPeca(pos).cor != jogadorAtual)
+            {
+                throw new TabuleiroException("A peça de origem escolhida não corresponde ao jogador do turno, selecione uma peça que corresponda ao jogador do turno.");
+            }
+            if(!tab.RetornaMatrizPeca(pos).ExisteMovimentosPossiveis())
+            {
+                throw new TabuleiroException("Não existem movimentos possíveis para a peça escolhida, selecione uma peça válida.");
+            }
+        }
+
+        public void ValidaPosicaoDeDestino(Posicao origem, Posicao destino)
+        {
+            if(!tab.RetornaMatrizPeca(origem).PodeMoverPara(destino))
+            {
+                throw new TabuleiroException("Não é possível mover para a posição informada, informe uma posição válida.");
+            }
         }
 
         public void ExecutaMovimento(Posicao origem, Posicao destino)
