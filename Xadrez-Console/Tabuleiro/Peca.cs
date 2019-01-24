@@ -29,6 +29,8 @@
 
         public abstract bool[,] MovimentosPossiveis();
 
+        public abstract bool[,] MovimentosPossiveisXequeMate();
+
         public bool ExisteMovimentosPossiveis()
         {
             bool[,] mat = MovimentosPossiveis();

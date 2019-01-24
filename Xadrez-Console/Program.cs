@@ -13,7 +13,7 @@ namespace Xadrez_Console
             {
                 PartidaDeXadrez partida = new PartidaDeXadrez();
 
-                while(!partida.terminada)
+                while (!partida.terminada)
                 {
                     try
                     {
@@ -37,15 +37,20 @@ namespace Xadrez_Console
                         partida.ValidaPosicaoDeDestino(origem, destino);
                         partida.RealizaJogada(origem, destino);
                     }
-                    catch(TabuleiroException e)
+                    catch (TabuleiroException e)
                     {
                         Console.WriteLine(e.Message);
                         Console.ReadKey();
-                    }             
+                    }
                 }
 
                 Console.Clear();
-                Tela.ImprimirPartida(partida);
+
+
+                bool[,] PosicaoXequeMate = partida.RetornaPecaXequeMate(partida.jogadorAtual).MovimentosPossiveisXequeMate();
+
+                Tela.ImprimirTabuleiro(partida.tab, PosicaoXequeMate);
+                
                 Console.ReadKey();
             }
             catch(TabuleiroException e)

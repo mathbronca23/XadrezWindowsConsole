@@ -247,5 +247,29 @@ namespace xadrez
             ColocarNovaPeca('a', 8, new Rei(tab, Cor.Preta));
             ColocarNovaPeca('b', 8, new Torre(tab, Cor.Preta));
         }
+
+        public Peca RetornaPecaXequeMate(Cor cor)
+        {
+            Posicao ReiPosition;
+
+            foreach (Peca p in PecasEmJogo(CorAdversaria(jogadorAtual)))
+            {
+                if (p is Rei)
+                {
+                    ReiPosition = new Posicao(p.posicao.linha, p.posicao.coluna);
+
+                    foreach (Peca x in PecasEmJogo(jogadorAtual))
+                    {
+                        if (x.PodeMoverPara(ReiPosition))
+                        {
+                            return x;
+                        }
+                    }
+                }
+
+            }
+
+            return null;
+        }
     }
 }
