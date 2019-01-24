@@ -76,5 +76,21 @@
         {
             return RetornaMatrizPeca(origem); 
         }
+
+        public bool[,] RetornaMatrizParaRei(Peca origem)
+        {
+            bool[,] mat = new bool[linhas, colunas];
+
+            Posicao pos = new Posicao(0, 0);
+
+            for(int i = 0; i<linhas; i++)
+            {
+                for(int j = 0; j<colunas; j++)
+                {
+
+                }
+            }
+
+        }
     }
 }

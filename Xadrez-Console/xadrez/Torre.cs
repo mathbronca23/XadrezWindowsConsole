@@ -21,13 +21,15 @@ namespace xadrez
             bool[,] mat = new bool[tab.linhas, tab.colunas];
 
             Posicao pos = new Posicao(0, 0);
-            Posicao origem = new Posicao(pos.linha,pos.coluna);
-            //ACIMA
+            Posicao origem = new Posicao(0,0);
+            origem.DefinirValores(posicao.linha, posicao.coluna);
             pos.DefinirValores(posicao.linha - 1, posicao.coluna);
+
+            //ACIMA
+            pos.DefinirValores(posicao.linha, posicao.coluna);
             while (tab.posicaoValida(pos) && PodeMover(pos))
             {
-
-                if(tab.RetornaMatrizPeca(pos) is Rei)
+                if(tab.RetornaMatrizPeca(pos) is Rei && tab.RetornaMatrizPeca(pos).cor != tab.RetornaMatrizPeca(origem).cor)
                 {
                     while (pos != origem)
                     {
