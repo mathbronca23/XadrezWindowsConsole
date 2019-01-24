@@ -24,6 +24,8 @@ namespace Xadrez_Console
                         partida.ValidaPosicaoDeOrigem(origem);
 
                         bool[,] PosicoesPossiveis = partida.tab.RetornaMatrizPeca(origem).MovimentosPossiveis();
+                        Peca peca = partida.tab.RetornaMatrizPeca(origem);
+                        peca.SelecionaPeca(peca.selecao);
 
                         Console.Clear();
                         Tela.ImprimirTabuleiro(partida.tab, PosicoesPossiveis);

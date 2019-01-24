@@ -46,7 +46,6 @@
                 aux.posicao = null;
                 pecas[pos.linha, pos.coluna] = null;
                 return aux;
-
             }
         }
 
@@ -71,6 +70,11 @@
             {
                 throw new TabuleiroException("Posição inválida!");
             }
+        }
+
+        public Peca RetornaPecaSelecionada(Posicao origem)
+        {
+            return RetornaMatrizPeca(origem); 
         }
     }
 }

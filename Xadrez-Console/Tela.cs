@@ -15,24 +15,33 @@ namespace Xadrez_Console
             Console.WriteLine();
             Console.WriteLine("Turno: " + partida.turno);
             Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+            if (partida.xeque == true)
+            {
+                Console.WriteLine("XEQUE!");
+            }
             Console.WriteLine();
         }
 
         private static void ImprimirPecasCapturadas(PartidaDeXadrez partida)
         {
-            ConsoleColor aux = Console.ForegroundColor;
+            ConsoleColor foreaux = Console.ForegroundColor;
+            ConsoleColor backaux = Console.BackgroundColor;
 
             Console.WriteLine("Peças Capturadas:");
-            Console.Write("Brancas: ");
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Brancas: ");            
             ImprimirConjunto(partida.PecasCapturadas(Cor.Branca));
-            Console.ForegroundColor = aux;
-            Console.WriteLine();                 
+            Console.ForegroundColor = foreaux;
+            Console.BackgroundColor = backaux;
+            Console.WriteLine();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("Pretas: ");
             Console.ForegroundColor = ConsoleColor.Black;
             ImprimirConjunto(partida.PecasCapturadas(Cor.Preta));
-            Console.ForegroundColor = aux;
-            Console.WriteLine();
+            Console.ForegroundColor = foreaux;
+            Console.BackgroundColor = backaux;
         }
 
         public static void ImprimirConjunto(HashSet<Peca> pecas)
@@ -97,28 +106,51 @@ namespace Xadrez_Console
         }
 
         public static void ImprimirPeca(Peca peca)
-        {
+        {          
             if (peca == null)
             {
                 Console.Write("- ");
             }
             else
             {
-
                 if (peca.cor == Cor.Branca)
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(peca);
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (!peca.selecao == true)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(peca);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Write(peca);
+                        peca.SelecionaPeca(peca.selecao);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(peca);
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (!peca.selecao == true)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(peca);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Write(peca);
+                        peca.SelecionaPeca(peca.selecao);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
                 }
 
                 Console.Write(" ");
+                Console.BackgroundColor = ConsoleColor.DarkGray;
             }
         }
 
