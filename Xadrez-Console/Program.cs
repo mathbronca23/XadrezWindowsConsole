@@ -29,7 +29,7 @@ namespace Xadrez_Console
                         peca.SelecionaPeca(peca.selecao);
 
                         Console.Clear();
-                        Tela.ImprimirTabuleiro(partida.tab, PosicoesPossiveis);
+                        Tela.ImprimirTabuleiro(partida,partida.tab, PosicoesPossiveis);
 
                         Console.WriteLine();
                         Console.Write("Digite as coordenadas de destino da peça:");
@@ -46,10 +46,7 @@ namespace Xadrez_Console
 
                 Console.Clear();
 
-
-                bool[,] PosicaoXequeMate = partida.RetornaPecaXequeMate(partida.jogadorAtual).MovimentosPossiveisXequeMate();
-
-                Tela.ImprimirTabuleiro(partida.tab, PosicaoXequeMate);
+                Tela.ImprimirTabuleiro(partida, partida.tab, partida.tab.RetornaPosicoesXequeMate(partida));
                 
                 Console.ReadKey();
             }

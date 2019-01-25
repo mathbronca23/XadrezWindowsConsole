@@ -16,32 +16,34 @@ namespace xadrez
             return p == null || p.cor != cor;
         }
 
+
         public override bool[,] MovimentosPossiveisXequeMate()
         {
             bool[,] mat = new bool[tab.linhas, tab.colunas];
 
             Posicao pos = new Posicao(0, 0);
-            Posicao origem = new Posicao(0,0);
-            origem.DefinirValores(posicao.linha, posicao.coluna);
-            pos.DefinirValores(posicao.linha - 1, posicao.coluna);
 
             //ACIMA
-            pos.DefinirValores(posicao.linha, posicao.coluna);
-            while (tab.posicaoValida(pos) && PodeMover(pos))
+            Peca pecaOrigem = tab.RetornaMatrizPeca(posicao.linha, posicao.coluna);
+            pos.DefinirValores(posicao.linha -1 , posicao.coluna);
+            while(tab.posicaoValida(pos) && PodeMover(pos))
             {
-                if(tab.RetornaMatrizPeca(pos) is Rei && tab.RetornaMatrizPeca(pos).cor != tab.RetornaMatrizPeca(origem).cor)
+                if(tab.RetornaMatrizPeca(pos) != null && tab.RetornaMatrizPeca(pos).cor != cor)
                 {
-                    while (pos != origem)
+                    Peca p = tab.RetornaMatrizPeca(pos);
+                    if(p is Rei) 
                     {
-                        pos.linha = pos.linha + 1;
                         mat[pos.linha, pos.coluna] = true;
+
+                       while(p != pecaOrigem)
+                        {                       
+                            pos.linha = pos.linha +1;
+                            p = tab.RetornaMatrizPeca(pos);
+                            mat[pos.linha, pos.coluna] = true;
+                        }
+
                         break;
                     }
-                }
-
-                if (tab.RetornaMatrizPeca(pos) != null && tab.RetornaMatrizPeca(pos).cor != cor)
-                {
-                    break;
                 }
                 pos.linha = pos.linha - 1;
             }
@@ -50,10 +52,20 @@ namespace xadrez
             pos.DefinirValores(posicao.linha + 1, posicao.coluna);
             while (tab.posicaoValida(pos) && PodeMover(pos))
             {
-                mat[pos.linha, pos.coluna] = true;
                 if (tab.RetornaMatrizPeca(pos) != null && tab.RetornaMatrizPeca(pos).cor != cor)
                 {
-                    break;
+                    Peca p = tab.RetornaMatrizPeca(pos);
+                    if (p is Rei)
+                    {
+                        while (p != pecaOrigem)
+                        {                         
+                            pos.linha = pos.linha - 1;
+                            p = tab.RetornaMatrizPeca(pos);
+                            mat[pos.linha, pos.coluna] = true;
+                        }
+
+                        break;
+                    }
                 }
                 pos.linha = pos.linha + 1;
             }
@@ -62,22 +74,42 @@ namespace xadrez
             pos.DefinirValores(posicao.linha, posicao.coluna + 1);
             while (tab.posicaoValida(pos) && PodeMover(pos))
             {
-                mat[pos.linha, pos.coluna] = true;
                 if (tab.RetornaMatrizPeca(pos) != null && tab.RetornaMatrizPeca(pos).cor != cor)
                 {
-                    break;
+                    Peca p = tab.RetornaMatrizPeca(pos);
+                    if (p is Rei)
+                    {
+                        while (p != pecaOrigem)
+                        {                           
+                            pos.coluna = pos.coluna - 1;
+                            p = tab.RetornaMatrizPeca(pos);
+                            mat[pos.linha, pos.coluna] = true;
+                        }
+
+                        break;
+                    }
                 }
                 pos.coluna = pos.coluna + 1;
             }
 
             //ESQUERDA
-            pos.DefinirValores(posicao.linha, posicao.coluna - 1);
+            pos.DefinirValores(posicao.linha, posicao.coluna -1);
             while (tab.posicaoValida(pos) && PodeMover(pos))
             {
-                mat[pos.linha, pos.coluna] = true;
                 if (tab.RetornaMatrizPeca(pos) != null && tab.RetornaMatrizPeca(pos).cor != cor)
                 {
-                    break;
+                    Peca p = tab.RetornaMatrizPeca(pos);
+                    if (p is Rei)
+                    {
+                        while (p != pecaOrigem)
+                        {                           
+                            pos.coluna = pos.coluna + 1;
+                            p = tab.RetornaMatrizPeca(pos);
+                            mat[pos.linha, pos.coluna] = true;
+                        }
+
+                        break;
+                    }
                 }
                 pos.coluna = pos.coluna - 1;
             }

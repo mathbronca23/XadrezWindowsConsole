@@ -63,6 +63,25 @@ namespace Xadrez_Console
             Console.Write("]");
         }
 
+        public static void ImprimeCoresTabuleiro(Peca[,] mat)
+        {
+            ConsoleColor cor1 = ConsoleColor.DarkGray;
+            ConsoleColor cor2 = ConsoleColor.Gray;
+
+            foreach( p in mat)
+            {
+                if(Console.BackgroundColor == cor1)
+                {
+                    Console.BackgroundColor = cor2;
+                }
+                else
+                {
+                    Console.BackgroundColor = cor1;
+                }
+            }
+        }
+
+
         public static void ImprimirTabuleiro(Tabuleiro tab)
         {
             Console.BackgroundColor = ConsoleColor.DarkGray;
@@ -71,9 +90,10 @@ namespace Xadrez_Console
             for (int i = 0; i<tab.linhas; i++)
             {
                 Console.Write(8 - i + " ");
+
                 for(int j=0; j<tab.colunas; j++)
                 {
-                        ImprimirPeca(tab.RetornaMatrizPeca(i, j));                        
+                    ImprimirPeca(tab.RetornaMatrizPeca(i, j));                        
                 }
 
                 Console.WriteLine();
@@ -82,36 +102,92 @@ namespace Xadrez_Console
             Console.WriteLine("  A B C D E F G H");
         }
 
-        public static void ImprimirTabuleiro(Tabuleiro tab, bool[,] PosicoesPossiveis)
+        public static void ImprimirTabuleiro(PartidaDeXadrez partida,Tabuleiro tab, bool[,] PosicoesPossiveis)
         {
             ConsoleColor BackgroundColor = ConsoleColor.DarkGray;
-            ConsoleColor HighlightBackgroundColor = ConsoleColor.DarkGreen;
 
-            Console.BackgroundColor = BackgroundColor;
-            Console.Clear();
-
-            for (int i = 0; i < tab.linhas; i++)
+            if (partida.terminada != true)
             {
-                Console.Write(8 - i + " ");
-                for (int j = 0; j < tab.colunas; j++)
+                ConsoleColor xadrez1 = ConsoleColor.Gray;
+                ConsoleColor xadrez2 = ConsoleColor.DarkGray;
+                ConsoleColor HighlightBackgroundColor = ConsoleColor.DarkGreen;
+                Console.BackgroundColor = BackgroundColor;
+                Console.Clear();
+
+                for (int i = 0; i < tab.linhas; i++)
                 {
-                    if(PosicoesPossiveis[i,j] == true)
+                    Console.Write(8 - i + " ");
+                    for (int j = 0; j < tab.colunas; j++)
                     {
-                        Console.BackgroundColor = HighlightBackgroundColor;
-                    }
-                    else
-                    {
-                        Console.BackgroundColor = BackgroundColor;
+                        if (PosicoesPossiveis[i, j] == true)
+                        {
+                            Console.BackgroundColor = HighlightBackgroundColor;
+                        }
+                        else
+                        {
+                            if(Console.BackgroundColor == xadrez1)
+                            {
+                                Console.BackgroundColor = xadrez2;
+                            }
+                            else
+                            {
+                                Console.BackgroundColor = xadrez1;
+                            }
+                        }
+
+                        ImprimirPeca(tab.RetornaMatrizPeca(i, j));
                     }
 
-                    ImprimirPeca(tab.RetornaMatrizPeca(i, j));
+                    Console.WriteLine();
                 }
-                
-                Console.WriteLine();
-            }
 
-            Console.WriteLine("  A B C D E F G H");
-            Console.BackgroundColor = BackgroundColor;
+                Console.WriteLine("  A B C D E F G H");
+                Console.BackgroundColor = BackgroundColor;
+            }
+            else
+            {
+                Console.Clear();
+
+                for (int i = 0; i < tab.linhas; i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    Console.Write(8 - i + " ");
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+
+                    for (int j = 0; j < tab.colunas; j++)
+                    {
+                        if (PosicoesPossiveis[i, j] == true)
+                        {
+                            if (tab.RetornaMatrizPeca(i, j) != null && tab.RetornaMatrizPeca(i, j).cor == partida.jogadorAtual)
+                            {
+                                Console.BackgroundColor = ConsoleColor.Black;
+                            }
+                            else if (tab.RetornaMatrizPeca(i, j) != null && tab.RetornaMatrizPeca(i, j).cor != partida.jogadorAtual)
+                            {
+                                Console.BackgroundColor = ConsoleColor.White;
+                            }
+                            else
+                            {
+                                Console.BackgroundColor = ConsoleColor.Red;
+                            }
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = BackgroundColor;
+                        }
+
+                        ImprimirPeca(tab.RetornaMatrizPeca(i, j));
+                    }
+
+                    Console.WriteLine();
+                }
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine("  A B C D E F G H");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.BackgroundColor = BackgroundColor;
+            }
         }
 
         public static void ImprimirPeca(Peca peca)

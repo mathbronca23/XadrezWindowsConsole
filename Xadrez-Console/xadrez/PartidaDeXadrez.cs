@@ -41,14 +41,14 @@ namespace xadrez
 
         public void RealizaJogada(Posicao origem, Posicao destino)
         {
+            tab.RetornaUltimaPecaJogada(origem);
             Peca pecaCapturada = ExecutaMovimento(origem, destino);
-
-            if(IsReiEmCheque(jogadorAtual))
+           
+            if (IsReiEmCheque(jogadorAtual))
             {
                 DesfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroException("Você não pode se colocar em Xeque!");
             }
-
             if(IsReiEmCheque(CorAdversaria(jogadorAtual)))
             {
                 xeque = true;
@@ -59,7 +59,7 @@ namespace xadrez
             }
 
             if(TesteXequeMate(CorAdversaria(jogadorAtual)))
-            {
+            {             
                 terminada = true;
             }
             else
@@ -240,36 +240,19 @@ namespace xadrez
 
         private void ColocarPecas()
         {
-            ColocarNovaPeca('c', 1, new Torre(tab, Cor.Branca));
+            ColocarNovaPeca('a', 1, new Torre(tab, Cor.Branca));
             ColocarNovaPeca('d', 1, new Rei(tab, Cor.Branca));
-            ColocarNovaPeca('h', 7, new Torre(tab, Cor.Branca));
+            ColocarNovaPeca('f', 5, new Torre(tab, Cor.Branca));
+            ColocarNovaPeca('d',4, new Torre(tab, Cor.Branca));
+            ColocarNovaPeca('g', 4, new Torre(tab, Cor.Branca));
+            ColocarNovaPeca('d', 8, new Torre(tab, Cor.Branca));
+            ColocarNovaPeca('a', 6, new Torre(tab, Cor.Branca));
 
-            ColocarNovaPeca('a', 8, new Rei(tab, Cor.Preta));
-            ColocarNovaPeca('b', 8, new Torre(tab, Cor.Preta));
+            ColocarNovaPeca('g', 7, new Rei(tab, Cor.Preta));
+            ColocarNovaPeca('g', 8, new Torre(tab, Cor.Preta));
+            ColocarNovaPeca('h', 8, new Torre(tab, Cor.Preta));
+            ColocarNovaPeca('h', 7, new Torre(tab, Cor.Preta));
         }
 
-        public Peca RetornaPecaXequeMate(Cor cor)
-        {
-            Posicao ReiPosition;
-
-            foreach (Peca p in PecasEmJogo(CorAdversaria(jogadorAtual)))
-            {
-                if (p is Rei)
-                {
-                    ReiPosition = new Posicao(p.posicao.linha, p.posicao.coluna);
-
-                    foreach (Peca x in PecasEmJogo(jogadorAtual))
-                    {
-                        if (x.PodeMoverPara(ReiPosition))
-                        {
-                            return x;
-                        }
-                    }
-                }
-
-            }
-
-            return null;
-        }
     }
 }

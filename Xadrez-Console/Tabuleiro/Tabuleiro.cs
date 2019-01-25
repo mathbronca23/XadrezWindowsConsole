@@ -5,12 +5,14 @@
         public int linhas { get; set; }
         public int colunas { get; set; }
         private Peca[,] pecas;
+        public Peca ultimaJogada { get; private set; }
 
         public Tabuleiro(int linhas, int colunas)
         {
             this.linhas = linhas;
             this.colunas = colunas;
             pecas = new Peca[linhas, colunas];
+            ultimaJogada = null;
         }
 
         public Peca RetornaMatrizPeca(int linha, int coluna)
@@ -77,20 +79,33 @@
             return RetornaMatrizPeca(origem); 
         }
 
-        public bool[,] RetornaMatrizParaRei(Peca origem)
+        public Peca RetornaUltimaPecaJogada(Posicao origem)
         {
-            bool[,] mat = new bool[linhas, colunas];
+            ultimaJogada = RetornaMatrizPeca(origem);
+            return ultimaJogada;
+        }
 
-            Posicao pos = new Posicao(0, 0);
+        public bool[,] RetornaPosicoesXequeMate(xadrez.PartidaDeXadrez partida)
+        {
+            bool[,] PosicaoXequeMate = new bool[partida.tab.linhas, partida.tab.colunas];
 
-            for(int i = 0; i<linhas; i++)
+            foreach (Peca p in partida.PecasEmJogo(partida.jogadorAtual))
             {
-                for(int j = 0; j<colunas; j++)
-                {
+                bool[,] temp = p.MovimentosPossiveisXequeMate();
 
+                for (int i = 0; i < partida.tab.linhas; i++)
+                {
+                    for (int j = 0; j < partida.tab.linhas; j++)
+                    {
+                        if (temp[i, j] == true)
+                        {
+                            PosicaoXequeMate[i, j] = true;
+                        }
+                    }
                 }
             }
 
+            return PosicaoXequeMate;
         }
     }
 }
