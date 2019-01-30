@@ -29,13 +29,16 @@ namespace Xadrez_Console
                         peca.SelecionaPeca(peca.selecao);
 
                         Console.Clear();
-                        Tela.ImprimirTabuleiro(partida,partida.tab, PosicoesPossiveis);
+                        Tela.ImprimirPartida(partida, PosicoesPossiveis);
 
                         Console.WriteLine();
-                        Console.Write("Digite as coordenadas de destino da peça:");
+                        Console.Write("Digite as coordenadas de destino da peça: ");
                         Posicao destino = Tela.LerPosicaoXadrez().toPosition();
                         partida.ValidaPosicaoDeDestino(origem, destino);
                         partida.RealizaJogada(origem, destino);
+
+                        Tela.ImprimirPartida(partida, PosicoesPossiveis);
+                        Tela.ImprimirPartida(partida, partida.tab.RetornaPosicoesXequeMate(partida));
                     }
                     catch (TabuleiroException e)
                     {
@@ -44,10 +47,6 @@ namespace Xadrez_Console
                     }
                 }
 
-                Console.Clear();
-
-                Tela.ImprimirTabuleiro(partida, partida.tab, partida.tab.RetornaPosicoesXequeMate(partida));
-                
                 Console.ReadKey();
             }
             catch(TabuleiroException e)

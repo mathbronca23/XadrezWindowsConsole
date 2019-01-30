@@ -254,5 +254,9 @@ namespace xadrez
             ColocarNovaPeca('h', 7, new Torre(tab, Cor.Preta));
         }
 
+        public void TerminaPartida()
+        {
+            terminada = true;
+        }
     }
 }
