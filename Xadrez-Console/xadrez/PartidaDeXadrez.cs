@@ -99,7 +99,7 @@ namespace xadrez
 
         public void ValidaPosicaoDeDestino(Posicao origem, Posicao destino)
         {
-            if(!tab.RetornaMatrizPeca(origem).PodeMoverPara(destino))
+            if(!tab.RetornaMatrizPeca(origem).IsPossibleMovement(destino))
             {
                 throw new TabuleiroException("Não é possível mover para a posição informada, informe uma posição válida.");
             }

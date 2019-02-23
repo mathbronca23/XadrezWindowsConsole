@@ -8,11 +8,10 @@ namespace Xadrez_Console
     {
         static void Main(string[] args)
         {
+            PartidaDeXadrez partida = new PartidaDeXadrez();
             Console.ForegroundColor = ConsoleColor.Yellow;
             try
-            {
-                PartidaDeXadrez partida = new PartidaDeXadrez();
-
+            {              
                 while (!partida.terminada)
                 {
                     try
@@ -36,9 +35,7 @@ namespace Xadrez_Console
                         Posicao destino = Tela.LerPosicaoXadrez().toPosition();
                         partida.ValidaPosicaoDeDestino(origem, destino);
                         partida.RealizaJogada(origem, destino);
-
-                        Tela.ImprimirPartida(partida, PosicoesPossiveis);
-                        Tela.ImprimirPartida(partida, partida.tab.RetornaPosicoesXequeMate(partida));
+                        Tela.ImprimirPartida(partida);
                     }
                     catch (TabuleiroException e)
                     {
@@ -46,14 +43,15 @@ namespace Xadrez_Console
                         Console.ReadKey();
                     }
                 }
-
-                Console.ReadKey();
             }
             catch(TabuleiroException e)
             {
                 Console.WriteLine(e.Message);
                 Console.ReadLine();
             }
+
+            Tela.ImprimirPartida(partida, partida.tab.RetornaPosicoesXequeMate(partida));
+            Console.ReadKey();
         }
     }
 }

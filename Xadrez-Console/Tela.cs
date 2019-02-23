@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using tabuleiro;
 using xadrez;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Xadrez_Console
     {
         public static void ImprimirPartida(PartidaDeXadrez partida, bool[,] posicoesPossiveis)
         {
+
             ImprimirTabuleiro(partida, partida.tab, posicoesPossiveis);
             Console.WriteLine();
             Console.WriteLine("Turno: " + partida.turno);
@@ -28,6 +30,7 @@ namespace Xadrez_Console
             }
             else
             {
+
                 Console.WriteLine("XEQUE MATE!");
                 Console.WriteLine("Partida terminada, Vencedor: " + partida.jogadorAtual);
             }
@@ -131,12 +134,16 @@ namespace Xadrez_Console
 
         public static void ImprimirTabuleiro(Tabuleiro tab)
         {
+
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
+
+            Console.Write("                           ");
             Console.WriteLine("  A B C D E F G H");
 
             for (int i = 0; i < tab.linhas; i++)
             {
+                Console.Write("                           ");
                 Console.Write(8 - i + " ");
 
                 for (int j = 0; j < tab.colunas; j++)
@@ -155,6 +162,7 @@ namespace Xadrez_Console
                 Console.WriteLine();
             }
 
+            Console.Write("                           ");
             Console.WriteLine("  A B C D E F G H");
         }
 
@@ -164,12 +172,14 @@ namespace Xadrez_Console
             Console.Clear();
 
             // Draw A - H Row Header.
+            Console.Write("                           ");
             Console.WriteLine("  A B C D E F G H");
 
-            if(!partida.terminada == true)
+            if (!partida.terminada == true)
             {
                 for (int i = 0; i < tab.linhas; i++)
                 {
+                    Console.Write("                           ");
                     Console.Write(8 - i + " ");
                     for (int j = 0; j < tab.colunas; j++)
                     {
@@ -180,7 +190,7 @@ namespace Xadrez_Console
                         //Fill valid destination squares for selected piece.
                         if (PosicoesPossiveis[i, j] == true)
                         {
-                            CriaQuadrosTabuleiro(i, ConsoleColor.DarkGreen, ConsoleColor.Green, Console.BackgroundColor);
+                            CriaQuadrosTabuleiro(i, ConsoleColor.DarkGray, ConsoleColor.Gray, Console.BackgroundColor);
                         }
 
                         ImprimirPeca(tab.RetornaMatrizPeca(i, j));
@@ -199,6 +209,7 @@ namespace Xadrez_Console
                 }
 
                 //Draw A - H Footer.
+                Console.Write("                           ");
                 Console.WriteLine("  A B C D E F G H");
             }
             else
@@ -206,11 +217,13 @@ namespace Xadrez_Console
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.Clear();
 
+                Console.Write("                           ");
                 Console.WriteLine("  A B C D E F G H");
 
                 for (int i = 0; i < tab.linhas; i++)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("                           ");
                     Console.Write(8 - i + " ");
 
                     for (int j = 0; j < tab.colunas; j++)
@@ -222,16 +235,16 @@ namespace Xadrez_Console
                         {
                             if (tab.RetornaMatrizPeca(i, j) != null && tab.RetornaMatrizPeca(i, j).cor == partida.jogadorAtual)
                             {
-                                CriaQuadrosTabuleiro(i, ConsoleColor.DarkRed, ConsoleColor.Red, Console.BackgroundColor);
+                                CriaQuadrosTabuleiro(i, ConsoleColor.Red, ConsoleColor.Red, Console.BackgroundColor);
                             }
                             else if (tab.RetornaMatrizPeca(i, j) != null && tab.RetornaMatrizPeca(i, j).cor != partida.jogadorAtual)
                             {
-                                CriaQuadrosTabuleiro(i, ConsoleColor.DarkRed, ConsoleColor.Red, Console.BackgroundColor);
+                                CriaQuadrosTabuleiro(i, ConsoleColor.Red, ConsoleColor.Red, Console.BackgroundColor);
                             }
                             else
                             {
-                                CriaQuadrosTabuleiro(i, ConsoleColor.DarkRed, ConsoleColor.Red, Console.BackgroundColor);
-                            }                     
+                                CriaQuadrosTabuleiro(i, ConsoleColor.Red, ConsoleColor.Red, Console.BackgroundColor);
+                            }
                         }
 
                         ImprimirPeca(tab.RetornaMatrizPeca(i, j));
@@ -250,6 +263,7 @@ namespace Xadrez_Console
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.BackgroundColor = ConsoleColor.Black;
+                Console.Write("                           ");
                 Console.WriteLine("  A B C D E F G H");
             }
         }
@@ -315,5 +329,25 @@ namespace Xadrez_Console
 
         }
 
+        public static void CreateLogoHeader()
+        {
+            StringBuilder s1 = new StringBuilder();
+            StringBuilder s2 = new StringBuilder();
+            ConsoleColor defaultcolor = Console.ForegroundColor;
+
+            s1.AppendLine(" _____ _____ _____ _____ _____ __    _____    _____ _____ _____ _____ _____  ");
+            s1.AppendLine("|     |     |   | |   __|     |  |  |   __|  |     |  |  |   __|   __|   __| ");
+            s1.AppendLine("|   --|  |  | | | |__   |  |  |  |__|   __|  |   --|     |   __|__   |__   | ");
+            s1.AppendLine("|_____|_____|_|___|_____|_____|_____|_____|  |_____|__|__|_____|_____|_____| ");
+            s2.AppendLine("                _____ _____ _____ _____        ___     ___ ");
+            s2.AppendLine("               |   __|  _  |     |   __|   _ _|_  |   |   |");
+            s2.AppendLine("               |  |  |     | | | |   __|  | | |_| |_ _| | |");
+            s2.AppendLine(@"               |_____|__|__|_|_|_|_____|   \_/|_____|_|___|");
+
+            Console.WriteLine(s1);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(s2);
+            Console.ForegroundColor = defaultcolor;
+        }
     }
 }
